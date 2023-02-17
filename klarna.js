@@ -58,3 +58,12 @@ export async function createOrder(product) {
   console.log(data);
   return data;
 }
+
+export async function retrieveOrder(order_id) {
+  const auth = getKlarnaAuth();
+  const url = "https://api.playground.klarna.com/checkout/v3/orders";
+
+  const response = await fetch(url, {
+    headers: { "Content-Type": "application/json", Authorization: auth },
+  });
+}

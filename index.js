@@ -3,7 +3,7 @@ const app = express();
 import { config } from "dotenv";
 config();
 
-import { createOrder } from "./klarna.js";
+import { createOrder, retrieveOrder } from "./klarna.js";
 
 console.log(process.env.PUBLIC_KEY);
 
@@ -24,6 +24,11 @@ app.get("/", (req, res) => {
 app.get("/p/:id", async (req, res) => {
   const product = products.find((product) => product.id === req.params.id);
   const data = await createOrder(product);
+  res.send(data.html_snippet);
+});
+
+app.get("/confirmation", async (req, res) => {
+  const data = await retrieveOrder(req.query.order_id);
   res.send(data.html_snippet);
 });
 
